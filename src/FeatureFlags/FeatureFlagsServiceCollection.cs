@@ -2,7 +2,7 @@
 
 namespace FeatureFlags
 {
-    public class FeatureFlagsServiceCollection
+    public sealed class FeatureFlagsServiceCollection
     {
         public IServiceCollection Services { get; }
 

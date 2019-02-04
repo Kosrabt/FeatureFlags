@@ -2,7 +2,7 @@
 
 namespace FeatureFlags.FeatureFlagProviders.Configuration
 {
-    internal class FeatureFlagOption : List<FeatureFlag>
+    internal sealed class FeatureFlagOption : List<FeatureFlag>
     {
     }
 }
