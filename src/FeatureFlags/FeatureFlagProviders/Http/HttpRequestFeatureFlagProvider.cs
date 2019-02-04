@@ -6,13 +6,13 @@ namespace FeatureFlags.FeatureFlagProviders.Http
 {
     internal sealed class HttpRequestFeatureFlagProvider : IFeatureFlagProvider
     {
-        public const string FeatureHeaderName = "X-Feature-Flags";
-
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly string headerName;
 
-        public HttpRequestFeatureFlagProvider(IHttpContextAccessor httpContextAccessor)
+        public HttpRequestFeatureFlagProvider(IHttpContextAccessor httpContextAccessor, string headerName)
         {
             this.httpContextAccessor = httpContextAccessor;
+            this.headerName = headerName;
         }
 
         public IEnumerable<FeatureFlag> GetFlags()
@@ -22,7 +22,7 @@ namespace FeatureFlags.FeatureFlagProviders.Http
             if (headers == null)
                 return Enumerable.Empty<FeatureFlag>();
 
-            if (headers.TryGetValue(FeatureHeaderName, out var flagString))
+            if (headers.TryGetValue(headerName, out var flagString))
             {
                 var flagNames = flagString
                     .FirstOrDefault()?

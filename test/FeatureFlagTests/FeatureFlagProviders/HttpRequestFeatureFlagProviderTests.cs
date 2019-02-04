@@ -10,10 +10,12 @@ namespace FeatureFlagTests.FeatureFlagProviders
 {
     public class HttpRequestFeatureFlagProviderTests
     {
+        private const string HeaderName = "X-Feature-Header";
+
         [Fact]
         public void NullHttpContextAccessor_Returns_Empty()
         {
-            var provider = new HttpRequestFeatureFlagProvider(null);
+            var provider = new HttpRequestFeatureFlagProvider(null, HeaderName);
 
             var flags = provider.GetFlags();
 
@@ -26,7 +28,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
             httpContextAccessorMock.Setup(x => x.HttpContext).Returns((HttpContext)null);
 
-            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock.Object);
+            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock.Object, HeaderName);
 
             var flags = provider.GetFlags();
 
@@ -42,7 +44,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
             httpContextAccessorMock.Setup(x => x.HttpContext).Returns(httpContext.Object);
             httpContext.Setup(x => x.Request).Returns((HttpRequest)null);
 
-            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock.Object);
+            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock.Object, HeaderName);
 
             var flags = provider.GetFlags();
 
@@ -60,7 +62,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
             httpContext.Setup(x => x.Request).Returns(httpRequest.Object);
             httpRequest.Setup(x => x.Headers).Returns((HeaderDictionary)null);
 
-            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock.Object);
+            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock.Object, HeaderName);
 
             var flags = provider.GetFlags();
 
@@ -73,7 +75,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
             var headerValues = new HeaderDictionary();
 
             IHttpContextAccessor httpContextAccessorMock = GetHttpContextAccessor(headerValues);
-            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock);
+            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock, HeaderName);
 
             var flags = provider.GetFlags();
 
@@ -89,7 +91,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
             headerValues.Add("X-Not-Test-Header", new StringValues("Not a value"));
 
             IHttpContextAccessor httpContextAccessorMock = GetHttpContextAccessor(headerValues);
-            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock);
+            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock, HeaderName);
 
             var flags = provider.GetFlags();
 
@@ -104,7 +106,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
             HeaderDictionary headerValues = GetFeatureHeader(flagName);
 
             IHttpContextAccessor httpContextAccessorMock = GetHttpContextAccessor(headerValues);
-            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock);
+            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock, HeaderName);
 
             var flags = provider.GetFlags();
 
@@ -118,7 +120,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
             HeaderDictionary headerValues = GetFeatureHeader(String.Empty);
 
             IHttpContextAccessor httpContextAccessorMock = GetHttpContextAccessor(headerValues);
-            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock);
+            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock, HeaderName);
 
             var flags = provider.GetFlags();
 
@@ -133,7 +135,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
             HeaderDictionary headerValues = GetFeatureHeader(flagName);
 
             IHttpContextAccessor httpContextAccessorMock = GetHttpContextAccessor(headerValues);
-            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock);
+            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock, HeaderName);
 
             var flags = provider.GetFlags();
 
@@ -150,7 +152,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
             HeaderDictionary headerValues = GetFeatureHeader($"{flagName1};{flagName2}");
 
             IHttpContextAccessor httpContextAccessorMock = GetHttpContextAccessor(headerValues);
-            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock);
+            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock, HeaderName);
 
             var flags = provider.GetFlags();
 
@@ -174,7 +176,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
             HeaderDictionary headerValues = GetFeatureHeader($"{flagName1};;  ;;{flagName2}");
 
             IHttpContextAccessor httpContextAccessorMock = GetHttpContextAccessor(headerValues);
-            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock);
+            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock, HeaderName);
 
             var flags = provider.GetFlags();
 
@@ -193,7 +195,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
         {
             return new HeaderDictionary
             {
-                { HttpRequestFeatureFlagProvider.FeatureHeaderName, new StringValues(flagName) }
+                { HeaderName, new StringValues(flagName) }
             };
         }
 

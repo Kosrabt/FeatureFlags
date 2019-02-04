@@ -1,5 +1,6 @@
 ﻿using FeatureFlags.FeatureFlagProviders.Configuration;
 using FeatureFlags.FeatureFlagProviders.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,9 +8,9 @@ namespace FeatureFlags
 {
     public static class FeatureFlagsServiceCollectionExtensions
     {
-        public static FeatureFlagsServiceCollection AddHttpHeaderFlags(this FeatureFlagsServiceCollection services)
+        public static FeatureFlagsServiceCollection AddHttpHeaderFlags(this FeatureFlagsServiceCollection services, string headerName)
         {
-            services.Services.AddScoped<IFeatureFlagProvider, HttpRequestFeatureFlagProvider>();
+            services.Services.AddScoped<IFeatureFlagProvider>(sp=>new HttpRequestFeatureFlagProvider(sp.GetRequiredService<IHttpContextAccessor>(), headerName));
             return services;
         }
 
