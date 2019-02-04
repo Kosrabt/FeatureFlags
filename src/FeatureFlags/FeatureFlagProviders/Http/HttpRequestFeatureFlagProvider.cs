@@ -17,14 +17,18 @@ namespace FeatureFlags.FeatureFlagProviders.Http
 
         public IEnumerable<FeatureFlag> GetFlags()
         {
-            var headers = httpContextAccessor.HttpContext?.Request?.Headers;
+            var headers = httpContextAccessor?.HttpContext?.Request?.Headers;
 
             if (headers == null)
                 return Enumerable.Empty<FeatureFlag>();
 
             if (headers.TryGetValue(FeatureHeaderName, out var flagString))
             {
-                var flagNames = flagString.FirstOrDefault()?.Split(';');
+                var flagNames = flagString
+                    .FirstOrDefault()?
+                    .Split(new[] { ";" }, System.StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => x.Trim())
+                    .Where(x => !string.IsNullOrEmpty(x));
 
                 return flagNames.Select(name => new FeatureFlag(name, true)).ToList() ?? Enumerable.Empty<FeatureFlag>();
             }
