@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace FeatureFlags.FeatureFlagProviders.Http
 {
-    public class HttpRequestFeatureFlagProvider : IFeatureFlagProvider
+    internal class HttpRequestFeatureFlagProvider : IFeatureFlagProvider
     {
         public const string FeatureHeaderName = "X-Feature-Flags";
 

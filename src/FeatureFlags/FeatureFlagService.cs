@@ -4,7 +4,7 @@ using FeatureFlags.FeatureFlagProviders.Configuration;
 
 namespace FeatureFlags
 {
-    public class FeatureFlagService : IFeatureFlagService
+    internal class FeatureFlagService : IFeatureFlagService
     {
         private readonly IEnumerable<IFeatureFlagProvider> featureFlagProviders;
         private readonly IClock clock;

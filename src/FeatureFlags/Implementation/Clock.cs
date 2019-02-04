@@ -2,7 +2,7 @@
 
 namespace FeatureFlags.Implementation
 {
-    public class Clock : IClock
+    internal class Clock : IClock
     {
         public DateTime UtcNow() => DateTime.UtcNow;
     }

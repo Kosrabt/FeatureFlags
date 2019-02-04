@@ -2,7 +2,7 @@
 
 namespace FeatureFlags
 {
-    public interface IClock
+    internal interface IClock
     {
         DateTime UtcNow();
     }

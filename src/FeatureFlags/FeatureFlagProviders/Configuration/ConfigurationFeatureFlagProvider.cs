@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 
 namespace FeatureFlags.FeatureFlagProviders.Configuration
 {
-    public class ConfigurationFeatureFlagProvider : FeatureFlagProvider
+    internal class ConfigurationFeatureFlagProvider : FeatureFlagProvider
     {
         public ConfigurationFeatureFlagProvider(IOptionsMonitor<FeatureFlagOption> optionsMonitor)
         {
