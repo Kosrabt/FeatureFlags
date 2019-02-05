@@ -6,16 +6,16 @@ namespace FeatureFlags
 {
     public class FeatureFlag
     {
-        public string FeatureName { get; set; }
-        public bool Enabled { get; set; } = false;
+        public string Name { get; set; }
+        public bool Enabled { get; set; } = true;
         public DateTime AfterDate { get; set; } = DateTime.MinValue;
         public DateTime UntilDate { get; set; } = DateTime.MaxValue;
 
         public FeatureFlag() { }
 
-        public FeatureFlag(string featureName, bool enabled = false)
+        public FeatureFlag(string name, bool enabled = false)
         {
-            FeatureName = featureName;
+            Name = name;
             Enabled = enabled;
         }
     }
