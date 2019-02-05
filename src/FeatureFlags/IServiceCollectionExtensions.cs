@@ -7,7 +7,7 @@ namespace FeatureFlags
 {
     public static class IServiceCollectionExtensions
     {
-        public static FeatureFlagsServiceCollection AddFeatureFlags(IServiceCollection services)
+        public static FeatureFlagsServiceCollection AddFeatureFlags(this IServiceCollection services)
         {
             services.AddSingleton<IClock, Implementation.Clock>();
             services.AddTransient<IFeatureFlagService, FeatureFlagService>();

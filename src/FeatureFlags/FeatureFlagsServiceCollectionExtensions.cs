@@ -10,6 +10,7 @@ namespace FeatureFlags
     {
         public static FeatureFlagsServiceCollection AddHttpHeaderFlags(this FeatureFlagsServiceCollection services, string headerName)
         {
+            services.Services.AddHttpContextAccessor();
             services.Services.AddScoped<IFeatureFlagProvider>(sp=>new HttpRequestFeatureFlagProvider(sp.GetRequiredService<IHttpContextAccessor>(), headerName));
             return services;
         }

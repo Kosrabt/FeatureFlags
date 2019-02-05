@@ -20,7 +20,7 @@ namespace FeatureFlags
             if (string.IsNullOrEmpty(featureFlagName))
                 throw new System.ArgumentException("FlagName cannot be null or Empty", nameof(featureFlagName));
 
-            return GetEnabledFlags().Any(f => f.FeatureName.Equals(featureFlagName, System.StringComparison.InvariantCultureIgnoreCase));
+            return GetEnabledFlags().Any(f => f.Name.Equals(featureFlagName, System.StringComparison.InvariantCultureIgnoreCase));
         }
 
         private IEnumerable<FeatureFlag> GetEnabledFlags()

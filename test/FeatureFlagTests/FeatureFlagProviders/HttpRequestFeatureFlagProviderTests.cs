@@ -111,7 +111,7 @@ namespace FeatureFlagTests.FeatureFlagProviders
             var flags = provider.GetFlags();
 
             var singleFlag = Assert.Single(flags);
-            Assert.Equal(flagName, singleFlag.FeatureName);
+            Assert.Equal(flagName, singleFlag.Name);
         }
 
         [Fact]
@@ -160,11 +160,11 @@ namespace FeatureFlagTests.FeatureFlagProviders
 
             var first = flags.ElementAt(0);
             Assert.NotNull(first);
-            Assert.Equal(flagName1, first.FeatureName);
+            Assert.Equal(flagName1, first.Name);
 
             var second = flags.ElementAt(1);
             Assert.NotNull(second);
-            Assert.Equal(flagName2, second.FeatureName);
+            Assert.Equal(flagName2, second.Name);
         }
 
         [Fact]
@@ -184,11 +184,11 @@ namespace FeatureFlagTests.FeatureFlagProviders
 
             var first = flags.ElementAt(0);
             Assert.NotNull(first);
-            Assert.Equal(flagName1, first.FeatureName);
+            Assert.Equal(flagName1, first.Name);
 
             var second = flags.ElementAt(1);
             Assert.NotNull(second);
-            Assert.Equal(flagName2, second.FeatureName);
+            Assert.Equal(flagName2, second.Name);
         }
 
         private static HeaderDictionary GetFeatureHeader(string flagName)

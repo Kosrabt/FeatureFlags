@@ -60,14 +60,14 @@ namespace FeatureFlagTests.FeatureFlagProviders
 
             var optionMonitor = new Mock<IOptionsMonitor<FeatureFlagOption>>();
 
-            optionMonitor.Setup(x => x.CurrentValue).Returns(new FeatureFlagOption() { testFlag });
+            optionMonitor.Setup(x => x.CurrentValue).Returns(new FeatureFlagOption() { { testFlagName, testFlag } });
 
             var provider = new ConfigurationFeatureFlagProvider(optionMonitor.Object);
 
             var flags = provider.GetFlags();
             Assert.Single(flags);
             Assert.NotNull(flags.FirstOrDefault());
-            Assert.Equal(testFlagName, flags.FirstOrDefault().FeatureName);
+            Assert.Equal(testFlagName, flags.FirstOrDefault().Name);
         }
 
         [Fact]
@@ -75,11 +75,11 @@ namespace FeatureFlagTests.FeatureFlagProviders
         {
             string testFlagName = nameof(testFlagName);
             var originalFlag = new FeatureFlag(testFlagName, false);
-            var featureFlagOptions = new FeatureFlagOption() { originalFlag };
+            var featureFlagOptions = new FeatureFlagOption() { { testFlagName, originalFlag } };
 
             string otherTestFlagName = nameof(otherTestFlagName);
             var otherFlag = new FeatureFlag(otherTestFlagName, false);
-            var otherFeatureFlagOptions = new FeatureFlagOption() { otherFlag };
+            var otherFeatureFlagOptions = new FeatureFlagOption() { { testFlagName, otherFlag } };
 
             var optionsMonitor = new TestOptionsMonitor(featureFlagOptions);
 
@@ -93,12 +93,12 @@ namespace FeatureFlagTests.FeatureFlagProviders
 
             Assert.Single(originalFlags);
             Assert.NotNull(originalFlags.FirstOrDefault());
-            Assert.Equal(testFlagName, originalFlags.FirstOrDefault().FeatureName);
+            Assert.Equal(testFlagName, originalFlags.FirstOrDefault().Name);
 
 
             Assert.Single(otherFlags);
             Assert.NotNull(otherFlags.FirstOrDefault());
-            Assert.Equal(otherTestFlagName, otherFlags.FirstOrDefault().FeatureName);
+            Assert.Equal(otherTestFlagName, otherFlags.FirstOrDefault().Name);
         }
     }
 }

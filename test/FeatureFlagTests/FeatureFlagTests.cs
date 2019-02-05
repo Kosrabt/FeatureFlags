@@ -375,7 +375,7 @@ namespace FeatureFlagTests
         private static IFeatureFlagProvider CreateTestFeatureProvider(string[] returnItems)
         {
             var testProvider = new Mock<IFeatureFlagProvider>();
-            testProvider.Setup(p => p.GetFlags()).Returns(returnItems.Select(x => new FeatureFlag() { FeatureName = x, Enabled = true }));
+            testProvider.Setup(p => p.GetFlags()).Returns(returnItems.Select(x => new FeatureFlag() { Name = x, Enabled = true }));
             return testProvider.Object;
         }
 
