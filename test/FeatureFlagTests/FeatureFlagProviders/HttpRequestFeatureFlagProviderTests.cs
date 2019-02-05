@@ -82,8 +82,21 @@ namespace FeatureFlagTests.FeatureFlagProviders
             Assert.Empty(flags);
         }
 
+        [Fact]
+        public void HeadersContainsKeyButEmpty_Returns_Empty()
+        {
+            var headerValues = new HeaderDictionary();
+            headerValues.Add("X-Test-Header", new StringValues());
 
-       
+            IHttpContextAccessor httpContextAccessorMock = GetHttpContextAccessor(headerValues);
+            var provider = new HttpRequestFeatureFlagProvider(httpContextAccessorMock, HeaderName);
+
+            var flags = provider.GetFlags();
+
+            Assert.Empty(flags);
+        }
+
+
         [Fact]
         public void HeadersNotContainsKey_Returns_Empty()
         {

@@ -25,12 +25,12 @@ namespace FeatureFlags.FeatureFlagProviders.Http
             if (headers.TryGetValue(headerName, out var flagString))
             {
                 var flagNames = flagString
-                    .FirstOrDefault()?
+                    .FirstOrDefault()
                     .Split(new[] { ";" }, System.StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x => x.Trim())
-                    .Where(x => !string.IsNullOrEmpty(x));
-
-                return flagNames.Select(name => new FeatureFlag(name, true)).ToList() ?? Enumerable.Empty<FeatureFlag>();
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .Select(x => x.Trim());
+                
+                return flagNames.Select(name => new FeatureFlag(name, true)).ToList();
             }
             return Enumerable.Empty<FeatureFlag>();
         }
