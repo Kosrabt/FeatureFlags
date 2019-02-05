@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.Options;
 
 namespace FeatureFlags.FeatureFlagProviders.Configuration
@@ -13,7 +15,16 @@ namespace FeatureFlags.FeatureFlagProviders.Configuration
 
         private void ReloadOption(FeatureFlagOption featureFlagOption, string name)
         {
-            Flags = featureFlagOption?.ToList() ?? Enumerable.Empty<FeatureFlag>();
+            Flags = featureFlagOption?.Select(ResolveFeatureFlag) ?? Enumerable.Empty<FeatureFlag>();
+        }
+
+        private FeatureFlag ResolveFeatureFlag(KeyValuePair<string, FeatureFlag> flagRecord)
+        {
+            if (!string.IsNullOrEmpty(flagRecord.Value.Name))
+                return flagRecord.Value;
+
+            flagRecord.Value.Name = flagRecord.Key;
+            return flagRecord.Value;
         }
     }
 }
