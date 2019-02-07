@@ -108,6 +108,12 @@ You have the following options for each feature flag:
 }
 ```
 
+The following properties are optional:
+
+- "Enabled": true, optional, default true
+- "AfterDate": "2019-01-01", optional, default DateTime.MinValue
+- "UntilDate": "2019-12-31" optional, default DateTime.MaxValue
+      
 The `featureFlagService.IsEnabled("my-feature-flag")` will return true if the `Enabled` is true and we are between the `AfterDate` and `UntilDate`.
 
 ###  Http request header based feature flag provider
