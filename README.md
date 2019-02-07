@@ -100,9 +100,9 @@ You have the following options for each feature flag:
   "FeatureFlags": [
     {
       "Name": "my-feature-flag",
-      "Enabled": true,  --optional, default true
-      "AfterDate": "2019-01-01",  --optional, default DateTime.MinValue
-      "UntilDate": "2019-12-31"  --optional, default DateTime.MaxValue
+      "Enabled": true,
+      "AfterDate": "2019-01-01",
+      "UntilDate": "2019-12-31"
     }
   ]
 }
