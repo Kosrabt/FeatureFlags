@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FeatureFlags
 {
@@ -13,7 +11,7 @@ namespace FeatureFlags
 
         public FeatureFlag() { }
 
-        public FeatureFlag(string name, bool enabled = false)
+        public FeatureFlag(string name, bool enabled = true)
         {
             Name = name;
             Enabled = enabled;
