@@ -149,3 +149,41 @@ Each time when the `IFeatureFlagService.IsEnabled(string featureFlagName)` is ca
 it calls each `IFeatureFlagProvider GetFlags()` function and make a decision based on the results.
 
 For example, if load flags from a database, make sure, that you are not calling the database each time when the `GetFlags()` function executes.
+
+Example:
+
+```csharp
+ public class InMemoryFeatureFlagProvider : IFeatureFlagProvider
+    {
+        private readonly IList<FeatureFlag> flags = new List<FeatureFlag>();
+
+        public IEnumerable<FeatureFlag> GetFlags()
+        {
+            return flags;
+        }
+
+        public void AddFlag(string flagName)
+        {
+            if (!FlagExists(flagName))
+            {
+                flags.Add(new FeatureFlag(flagName));
+            }
+        }
+
+        public void RemoveFlag(string flagName)
+        {
+            if (FlagExists(flagName))
+            {
+                var flagToRemove = flags.FirstOrDefault(x => x.Name == flagName);
+                flags.Remove(flagToRemove);
+            }
+        }
+
+        public void ClearFlags()
+        {
+            flags.Clear();
+        }
+
+        private bool FlagExists(string flagName) => flags.Any(f => f.Name == flagName);
+    }
+```
