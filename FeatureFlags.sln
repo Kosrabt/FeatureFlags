@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatureFlags", "src\FeatureFlags\FeatureFlags.csproj", "{836569DC-C13D-457C-BAE6-ABC33E7786E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatureFlags", "src\FeatureFlags\FeatureFlags.csproj", "{836569DC-C13D-457C-BAE6-ABC33E7786E5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8D06D86F-C40E-4604-A008-C7B5DA952B2A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C2D9FFA6-8484-4A43-A016-6A53B4A01EC5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatureFlagTests", "test\FeatureFlagTests\FeatureFlagTests.csproj", "{9AC3E419-AC12-4D4E-914A-0D541FD5AD22}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{B27D6609-074F-41D9-BAB2-D04CAB2CCA53}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
