@@ -51,3 +51,101 @@ public string TestFeatureFlag()
     }
 }
 ```
+
+## Feature flag providers
+
+In order to use any feature flag in your code, you have to add Feature flag providers to populate the flags list.
+
+You are able to specify more than one `IFeatureFlagProvider`, but each of them will return only with the enabled flags.
+
+### Configuration based feature flag provider
+
+The configuration based feature flag provider will read a configuration section and populate the flags from that.
+
+This code will read the feature flags from the 'FeatureFlags' section
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services
+        .AddFeatureFlags()
+        .AddConfigurationFlags(Configuration.GetSection("FeatureFlags"));
+}
+```
+
+How the configuration should look like:
+
+```json
+{
+  "FeatureFlags": {
+    "my-feature-flag": {}
+  }
+}
+```
+
+or
+
+```json
+{
+  "FeatureFlags": [
+    { "Name": "my-feature-flag" }
+  ]
+}
+```
+
+You have the following options for each feature flag:
+
+```json
+{
+  "FeatureFlags": [
+    {
+      "Name": "my-feature-flag",
+      "Enabled": true, // optional, default true
+      "AfterDate": "2019-01-01", // optional, default DateTime.MinValue
+      "UntilDate": "2019-12-31" // optional, default DateTime.MaxValue
+    }
+  ]
+}
+```
+
+The `featureFlagService.IsEnabled("my-feature-flag")` will return true if the `Enabled` is true and we are between the `AfterDate` and `UntilDate`.
+
+###  Http request header based feature flag provider
+
+You can add feature flags from your HttpRequest's header. This allows you do set your feature flags for each call,
+for example disabling features for debugging or enabling new parts to test it in an isolated way.
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services
+        .AddFeatureFlags()
+        .AddHttpHeaderFlags("HeaderName");
+}
+```
+
+Within the `HeaderName` header you can send a semicolon separated list of flags which will set those flags enabled.
+
+Header sample
+
+```
+"my-feature-flag1; my-feature-flag2"
+```
+
+### Creating custom feature flag provider
+
+If you implement the `IFeatureFlagProvider`, you are able to add your own logic to add enable feature flags.
+
+Do not forget to register your provider to the DI.
+
+```csharp
+public interface IFeatureFlagProvider
+{
+    IEnumerable<FeatureFlag> GetFlags();
+}
+```
+
+Each time when the `IFeatureFlagService.IsEnabled(string featureFlagName)` is called,
+it calls each `IFeatureFlagProvider GetFlags()` function and make a decision based on the results.
+
+For example, if load flags from a database, make sure, that you are not calling the database each time when the `GetFlags()` function executes.
